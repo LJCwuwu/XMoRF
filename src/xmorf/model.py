@@ -1,6 +1,6 @@
-"""Final global-summary predictor, retaining the original checkpoint keys.
+"""Global-summary predictor compatible with the trained checkpoint keys.
 
-The historical keys ``spectral.spec`` refer here to the one-point, zero-frequency
+The checkpoint keys ``spectral.spec`` refer to the one-point, zero-frequency
 summary used by every final checkpoint. The saved scalar gate and epsilon are
 retained to reproduce the trained network exactly.
 """

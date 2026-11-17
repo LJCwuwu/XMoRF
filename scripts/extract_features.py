@@ -1,11 +1,11 @@
-"""Extract the original ProtT5/ProstT5 features using 1000/750 overlap-add chunks."""
+"""Extract ProtT5/ProstT5 features using 1000/750 overlap-add chunks."""
 import argparse,gc,json,os,sys
 from pathlib import Path
 import numpy as np
 import torch
 from xmorf.predict import read_fasta,feature_key
 ROOT=Path(__file__).resolve().parents[1]
-sys.path.insert(0,str(ROOT/'training_reference'))
+sys.path.insert(0,str(ROOT/'training'))
 from morf.features.plm import make_extractor
 
 def main():

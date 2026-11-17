@@ -1,0 +1,94 @@
+[
+  {
+    "path": "training/morf/__init__.py",
+    "sha256": "75ae9beea7f71c0fdac4fea9461224187d73465eae1e34886483e1ee4191dd93"
+  },
+  {
+    "path": "training/morf/config.py",
+    "sha256": "6266d949c89d2f1cffd48a0a0357f14d3ca2b71b5cfb7c3b12b2295dda1984ea"
+  },
+  {
+    "path": "training/morf/data/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "training/morf/data/parse.py",
+    "sha256": "f80f482ebe698db2632e2789453762b09b6abdf3546da24c77d7353dba5eadf2"
+  },
+  {
+    "path": "training/morf/data/dataset.py",
+    "sha256": "cacfc65c26966bc4f15b65c9897278f841ed15fe8bc721566454f0469a736014"
+  },
+  {
+    "path": "training/morf/data/splits.py",
+    "sha256": "6214cd0227db32c2c5f9a4a3dbf0e2fb9381e01efedd6a40142eba8c39f28f48"
+  },
+  {
+    "path": "training/morf/features/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "training/morf/features/scales.py",
+    "sha256": "99dbcd002573dcaf83b403cc12b8fa6157baead3ff89ea534c6094f9092095e9"
+  },
+  {
+    "path": "training/morf/features/plm.py",
+    "sha256": "97f05864abdae346a41ee0156a8085b6ef6e770ca783f8f2dc9d915759059a00"
+  },
+  {
+    "path": "training/morf/features/store.py",
+    "sha256": "0510dbdc494807cf8883d585116088640e0c148a3f6ccf153377065208a3ad76"
+  },
+  {
+    "path": "training/morf/models/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "training/morf/models/net.py",
+    "sha256": "0465502375a961607ed75cc5200be945343861d22a305aa69dcc165066ff7f22"
+  },
+  {
+    "path": "training/morf/models/spectral.py",
+    "sha256": "ea37f915d94b0bdee36249b21ec31933e649b067056c688abc0797dd09acd325"
+  },
+  {
+    "path": "training/morf/models/extras.py",
+    "sha256": "841ac374b3cacb1ce70399cd2957dc8c9c16fb7522f19b4e4f61f17310871e22"
+  },
+  {
+    "path": "training/morf/models/semicrf.py",
+    "sha256": "f8633b79339e96ee4bf5436650434b4791467b14cb24c4e938c201ea3238eb18"
+  },
+  {
+    "path": "training/morf/eval/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "training/morf/eval/metrics.py",
+    "sha256": "84cb4e09ab2d6a7386a282e0e726690e819aebd4f46bc427220165ee928a720f"
+  },
+  {
+    "path": "training/morf/eval/protocols.py",
+    "sha256": "24c821343baa3b1e5bda5d82065142921596048b5fb19d8f4ceb923a333ff982"
+  },
+  {
+    "path": "training/morf/eval/stats.py",
+    "sha256": "2511aaefb0af14bd5ef00f76574c045a94240087d792df668fef65b1ce04e00f"
+  },
+  {
+    "path": "training/morf/train/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "training/morf/train/trainer.py",
+    "sha256": "247f9c47b862da0cee8eae77db9c61be893c7a9f95a710e00ed25d6fbaf7bc5c"
+  },
+  {
+    "path": "training/morf/train/nested.py",
+    "sha256": "c4a66edadd1205903a14dbd9445ac481b40513319744218ab57f234150ecb0e7"
+  },
+  {
+    "path": "training/morf/train/losses.py",
+    "sha256": "92007c2178e51ae4fb1e6af9d7a4adf42756278edab1c75c3177ba14eeab7aa3"
+  }
+]
