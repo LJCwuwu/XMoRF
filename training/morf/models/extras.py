@@ -1,11 +1,11 @@
-"""第 70 步快筛的候选零件（都接在全局头上；每个零件最后一层的权重和偏置初值都是 0，
-所以训练开始时、以及这层为 0 时，模型和原来的全局头完全一样——原来的全局头是每个零件的特例）。
+"""Optional extensions to the global-summary architecture.
 
-  MultiScaleSelect          多尺度自选窗口：同时看 5、11、21、41 个残基的窗口（逐通道卷积），每个残基用 softmax 自己决定各窗口的权重；
-  MultiScaleLocalAttention  多尺度局部注意力：4 个注意力头，分别只看 ±2、±5、±10、±20 个残基以内的邻居（带相对位置偏置）；
-  TerminalPosition          末端位置编码：残基在蛋白里的相对位置、到 N 端 / C 端的距离（对数和指数两种刻度）；
-  GatedFusion               两个语言模型的逐残基门控融合（接在 InputFusion 里）：每个残基用 softmax 决定更信哪个语言模型。
-"""
+MultiScaleSelect combines depthwise-convolution windows of 5, 11, 21 and 41
+residues. MultiScaleLocalAttention uses four local attention radii. TerminalPosition
+encodes distance to sequence ends, and GatedFusion combines language-model
+features at each residue. Zero-initialized output layers preserve the base
+architecture at initialization. These extensions are disabled in the final
+XMoRF configurations."""
 from __future__ import annotations
 
 import math

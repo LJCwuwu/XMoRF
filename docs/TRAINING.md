@@ -10,28 +10,29 @@ The final ensemble uses four configuration files in `configs/training/`:
 | `region.json` | Independent region predictor |
 
 Each configuration is shared across four folds and six seeds. The training
-command sets `fold` and `seed`; all other parameters match the corresponding
-original run configurations. The nested model uses S0 with `k_stop=0` and no
+command sets `fold` and `seed`. Model and optimization parameters match the
+trained ensemble; input/output locations are supplied by the caller.
+The nested model uses `k_stop=0` and no
 local attention. The independent core predictor masks non-core labels within
 40 residues of a core. The language models remain frozen, and the predictors
 are trained without warm starts.
 
 ## Data and folds
 
-Prepare the input files from the original experiment directory:
+Place the benchmark files in a local directory, then prepare the dataset layout:
 
 ```bash
-python scripts/prepare_data.py --source-project /path/to/MoRF_project --output data
+python scripts/prepare_data.py --source /path/to/benchmark_files --output data
 python scripts/train_final.py --role nested --fold 0 --seed 0 --data data --check-only
 ```
 
-The preparation script uses the source paths and checksums in
-`configs/data_sources.json`. See [Data](DATA.md) for benchmark sources and masks.
+The preparation script searches the source directory recursively and identifies
+files by their SHA256 checksums in `configs/data_sources.json`. Source filenames
+and folder names may differ. See [Data](DATA.md) for benchmark sources and masks.
 
 `configs/train421_folds.json` defines the TRAIN421 split: 421 records representing
 375 unique sequences, with 103, 102, 120 and 96 records in the validation folds.
-Identical sequences share a fold. MC2-ext uses its four supplied folds. The
-historical 342-record `data/multitask/cl` subset is not used for this ensemble.
+Identical sequences share a fold. MC2-ext uses its four supplied folds.
 
 ## Run training
 
@@ -50,7 +51,9 @@ caller. Existing run directories are not overwritten.
 The wrapper sets local input/output paths and disables post-training test-set
 reporting. Training architecture, losses, optimization, stopping rules and
 validation-selected smoothing follow the implementation in `training/morf/`.
-`training/source_manifest.json` records the original source file hashes.
+`training/source_manifest.json` records SHA256 checksums for the training modules.
+Optional architectures in those modules are disabled by the four final-model
+configurations.
 
 Retrained weights need a new model manifest with their own checksums, smoothing
 windows and development-set thresholds. The supplied ensemble manifest describes

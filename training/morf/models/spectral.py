@@ -1,21 +1,10 @@
-"""可学习局部谱矩（Learnable Spectral Moment, LSM）——本文的核心模块。
+"""Spectral summaries with learnable frequency gates.
 
-【一句话】把经典的“疏水矩”推广成可学习、多分辨率、多频率的神经网络层。
-
-【动机】经典疏水矩（Eisenberg 1982）：
-        μH(l, θ) = | Σ_{n in 窗口} h(a_{l+n}) · e^{i n θ} |
-    其中 h 是疏水标度，θ=100° 对应 α 螺旋（每圈 3.6 个残基）。
-    这正好就是“疏水性信号在第 l 个残基处、角频率 θ 上的短时傅里叶幅值”。
-    很多 MoRF 结合时折叠成两亲 α 螺旋，所以局部周期性是有生物学依据的信号。
-
-【推广】
-    1. 标度可学：h 不再是固定的 Eisenberg 值，而是从语言模型特征线性投影出 K 条“性质通道”；
-    2. 频率全扫：θ 取 0°~180° 整个网格（可选可学习），不只看 100°；
-    3. 多分辨率：窗口 11 / 17 / 25，对应 5~25 残基长度的 MoRF；
-    4. 取幅值：|·| 是非线性的、对窗口内平移不敏感，这是普通卷积一层做不到的
-       （回应“频域乘滤波器 = 空域卷积”的审稿质疑）；
-    5. 频率门控：每个 (分辨率, 频率) 一个可学习门，训练完能直接画出“模型在意哪些周期”。
-"""
+LocalSpectrum evaluates windowed sinusoidal projections over several window
+sizes; GlobalSpectrum summarizes the full sequence. Projection magnitudes are
+normalized and gated before being passed to the prediction network. Frequency
+grids and window sizes are configurable. The final XMoRF model uses global mode
+with spec_freq_step=360, leaving only the zero-frequency component."""
 from __future__ import annotations
 
 import math
@@ -132,7 +121,7 @@ class GlobalSpectrum(nn.Module):
 
 
 class GlobalPartition(nn.Module):
-    """无序感知的全局上下文（第 69 步）：一个可学的门 g ∈ (0, 1) 把整条蛋白软切成两部分，
+    """无序感知的全局上下文：一个可学的门 g ∈ (0, 1) 把整条蛋白软切成两部分，
     同样的 K 条性质信号在两部分上各取加权平均（取绝对值、对数压缩，和 GlobalSpectrum 只有 0° 时同一种摘要），
     再加上第一部分的占比；输出 [B, 2K + 1, L]（每个残基同一份，padding 处为 0）。
     g 处处相同时，两部分的平均都等于整条蛋白的平均。"""
@@ -164,7 +153,7 @@ class GlobalPartition(nn.Module):
 
 
 class GlobalLocal(nn.Module):
-    """全局 + 局部（第 60 步，经典基准的长 MoRF）：同一组性质通道，既算整条蛋白上的谱（GlobalSpectrum），
+    """全局 + 局部：同一组性质通道，既算整条蛋白上的谱（GlobalSpectrum），
     又算以每个残基为中心的几个长窗口内的谱（LocalSpectralMoment），两者拼在一起。
     只取 0°（spec_freq_step 很大）、窗口内等权（spec_taper = rect）时，就是“整条蛋白的平均 + 45、91 个残基窗口内的平均”，
     借鉴 TransFuse 在 10、45、90 个残基的窗口上汇总特征的做法（10 个残基以内的上下文窗口头已经覆盖）。"""

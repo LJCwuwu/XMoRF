@@ -1,8 +1,16 @@
 {
-  "raw_dir": "data/MoRFs_AdapTrans/data/raw_seqs1",
-  "data_files": {},
-  "feat_dir": "data/features_v2",
-  "out_dir": "outputs_abl91",
+  "raw_dir": "",
+  "data_files": {
+    "TRAIN": "data/training/TRAIN421.txt",
+    "MC2EXT": [
+      "data/training/MC2-ext/CV1.af",
+      "data/training/MC2-ext/CV2.af",
+      "data/training/MC2-ext/CV3.af",
+      "data/training/MC2-ext/CV4.af"
+    ]
+  },
+  "feat_dir": "features",
+  "out_dir": "training_outputs/nested",
   "plms": [
     "prott5",
     "prostt5"
@@ -87,7 +95,7 @@
     45
   ],
   "blind_test": true,
-  "tag": "C91_S0q",
+  "tag": "nested_q",
   "finetune": "",
   "lora_r": 8,
   "lora_alpha": 16.0,

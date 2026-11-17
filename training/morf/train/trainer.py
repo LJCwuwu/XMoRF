@@ -1,10 +1,8 @@
-"""训练一次 = 一个配置 × 一个种子。产出写进 out_dir/runs/<tag>_s<seed>/：
-    config.json         本次配置
-    model.pt            验证集 AUC 最好的权重
-    history.csv         每个 epoch 的 loss / 验证 AUC / AUPR
-    metrics.json        各测试集指标（阈值来自验证集）
-    preds_<集合>.npz    逐残基预测（后面做集成、DeLong、画图都靠它）
-"""
+"""Train one predictor for a configuration, fold and seed.
+
+Run directories contain the resolved configuration, best validation checkpoint,
+training history and residue-level predictions. Evaluation metrics are written
+for the requested datasets. Decision thresholds are selected on validation data."""
 from __future__ import annotations
 
 import csv
@@ -126,7 +124,7 @@ def _subsample(cfg: Config, tr: List[Protein]) -> List[Protein]:
 
 
 def mask_flanks(p: Protein, k: int) -> Protein:
-    """第 61 步：离最近的 MoRF 残基（标签 1）不超过 k 个位置的非 MoRF 残基（标签 0）改成 -1，不进损失。
+    """离最近的 MoRF 残基（标签 1）不超过 k 个位置的非 MoRF 残基（标签 0）改成 -1，不进损失。
     MoRF 残基、更远的非 MoRF 残基、本来就是 -1 的位置都不变；k <= 0 或这条蛋白没有 MoRF 时原样返回。"""
     k = int(k)
     lab = np.asarray(p.labels)
@@ -389,7 +387,7 @@ def run_training(cfg: Config, verbose: bool = True) -> Dict:
         sets[n] = [p.eval_view() for p in sets[n]]
     va_orig = None
     if int(cfg.flank_mask) > 0:
-        # 第 61 步：训练折、验证折里，核心两侧 flank_mask 个残基以内的非 MoRF 残基不算负样本
+        # 训练折、验证折里，核心两侧 flank_mask 个残基以内的非 MoRF 残基不算负样本
         # （早停、选平滑窗口也按这套标签）；preds_VAL.npz 仍存原始标签
         va_orig = va_p
         tr_p = [mask_flanks(p, cfg.flank_mask) for p in tr_p]
@@ -405,7 +403,7 @@ def run_training(cfg: Config, verbose: bool = True) -> Dict:
     store_plms = [m for m in cfg.plms if m != ft]
     miss = store.check(allp, store_plms)
     if any(miss.values()):
-        raise RuntimeError(f"特征缺失 {miss}，请先运行 scripts/01_extract_features.py")
+        raise RuntimeError(f"特征缺失 {miss}，请先运行 scripts/extract_features.py")
     plm_dims = {m: int(store.load(m, allp[0].key, mmap=True).shape[1]) for m in store_plms}
     max_len = cfg.ft_max_len if ft else cfg.max_len
 

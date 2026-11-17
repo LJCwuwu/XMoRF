@@ -1,8 +1,16 @@
 {
-  "raw_dir": "data/MoRFs_AdapTrans/data/raw_seqs1",
-  "data_files": {},
-  "feat_dir": "data/features_v2",
-  "out_dir": "outputs_abl61/classic",
+  "raw_dir": "",
+  "data_files": {
+    "TRAIN": "data/training/TRAIN421.txt",
+    "MC2EXT": [
+      "data/training/MC2-ext/CV1.af",
+      "data/training/MC2-ext/CV2.af",
+      "data/training/MC2-ext/CV3.af",
+      "data/training/MC2-ext/CV4.af"
+    ]
+  },
+  "feat_dir": "features",
+  "out_dir": "training_outputs/core",
   "plms": [
     "prott5",
     "prostt5"
@@ -71,10 +79,7 @@
   "amp": true,
   "device": "auto",
   "train_set": "TRAIN",
-  "eval_sets": [
-    "TEST464",
-    "EXP53"
-  ],
+  "eval_sets": [],
   "n_boot": 0,
   "smooth": "auto",
   "smooth_windows": [
@@ -90,7 +95,7 @@
     45
   ],
   "blind_test": true,
-  "tag": "C61_FT40G",
+  "tag": "core",
   "finetune": "",
   "lora_r": 8,
   "lora_alpha": 16.0,

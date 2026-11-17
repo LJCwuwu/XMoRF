@@ -25,7 +25,7 @@ class ProteinDataset(Dataset):
         self.use_aa, self.max_len, self.train = use_aa_scales, max_len, train
         self.rng = np.random.RandomState(seed)
         self.cache = None
-        if preload:  # 938 条蛋白 × 2304 维 fp16 ≈ 2.6 GB，AutoDL 内存放得下
+        if preload:  # Preload cached embeddings into host memory.
             self.cache = [{m: store.load(m, p.key) for m in plms} for p in prots]
 
     def __len__(self) -> int:

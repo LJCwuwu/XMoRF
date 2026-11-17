@@ -2,9 +2,9 @@
 
 XMoRF uses TRAIN421, TEST464, EXP53, the MC2 benchmarks, homology-filtered
 MC2-ext, cross-benchmark filtered subsets and an IDEAL evaluation set.
-`configs/data_sources.json` records source paths, file sizes and SHA256 checksums.
-`scripts/prepare_data.py` copies these files from the original experiment
-directory without changing their labels or masks.
+`configs/data_sources.json` records dataset paths, file sizes and SHA256 checksums.
+`scripts/prepare_data.py` finds the matching files in a source directory and
+copies them into the dataset layout without changing labels or masks.
 
 ## Benchmarks
 

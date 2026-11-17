@@ -1,8 +1,9 @@
-"""MoRFNet：多语言模型融合 → [空域分支 | 谱分支] → 门控融合 → 逐残基打分。
+"""Configurable MoRF prediction networks.
 
-所有模块都支持变长 batch：mask 为 0 的位置在每一层都被清零，
-所以 batch>1 时 padding 不会污染真实残基（修掉旧版 batch=1 + BatchNorm 的问题；全程 LayerNorm）。
-"""
+Language-model features feed spatial and/or spectral-summary branches, followed
+by residue-level scoring. Masks are applied throughout the network to support
+variable-length batches. The final XMoRF configurations use the global-summary
+branch with a single zero-frequency component."""
 from __future__ import annotations
 
 from typing import Dict, Optional
@@ -16,7 +17,7 @@ from .extras import GatedFusion, MultiScaleLocalAttention, MultiScaleSelect, Ter
 from .spectral import GlobalLocal, GlobalPartition, GlobalSpectrum, LocalSpectralMoment
 
 AA_EXTRA_DIM = 24  # 21 维 one-hot + 3 个氨基酸标度
-# 全局头（只取整条蛋白的平均）再加一个零件的几种模式：第 69 步 global_da；第 70 步快筛 global_msk / lma / tpe / gpf
+# Optional extensions of the global-summary branch.
 GLOBAL_PLUS = ("global_da", "global_msk", "global_lma", "global_tpe", "global_gpf")
 
 
@@ -32,7 +33,7 @@ class InputFusion(nn.Module):
             n: nn.Sequential(nn.LayerNorm(dim), nn.Dropout(p_in), nn.Linear(dim, d))
             for n, dim in dims.items()})
         self.mix = nn.Sequential(nn.Linear(d * len(self.names), d), nn.GELU())
-        # 第 70 步的候选零件 gpf：逐残基门控融合（加在 GELU 前；最后一层初值为 0，所以一开始和原来完全一样）
+        # Residue-level gated fusion, initialized to preserve the base branch.
         self.gated = GatedFusion(d, len(self.names)) if gated else None
 
     def forward(self, feats: Dict[str, torch.Tensor], mask: torch.Tensor) -> torch.Tensor:
@@ -103,7 +104,7 @@ class SpectralBranch(nn.Module):
         if self.mode == "global" or self.mode in GLOBAL_PLUS:
             self.spec = GlobalSpectrum(K, cfg.spec_freq_step, cfg.spec_learn_freq)
         elif self.mode == "global_local":
-            # 第 60 步：整条蛋白的谱 + 以每个残基为中心的长窗口内的谱（同一组性质通道）
+            # Combine full-sequence and long-window summaries of the same channels.
             self.spec = GlobalLocal(K, cfg.spec_windows, cfg.spec_freq_step, cfg.spec_taper, cfg.spec_learn_freq)
         else:
             self.spec = LocalSpectralMoment(K, cfg.spec_windows, cfg.spec_freq_step,
@@ -112,14 +113,14 @@ class SpectralBranch(nn.Module):
         self.out = nn.Sequential(nn.LayerNorm(n), nn.Linear(n, d), nn.GELU(), nn.Dropout(cfg.dropout))
         self.smooth = ResDilatedBlock(d, 5, 1, cfg.dropout)
         if self.mode == "global_da":
-            # 第 69 步：无序感知的全局上下文。新加的部分都在这里：一个门把蛋白软切成两部分，各取摘要，
+            # A learned gate partitions the sequence into two weighted summaries.
             # 经 LayerNorm 和一个线性层（初值为 0、不带偏置）加到原来整条蛋白摘要的线性输出上，再过 GELU。
             # 这个线性层为 0 时，就是原来的全局头（global）。
             self.part_gate = nn.Sequential(nn.LayerNorm(d), nn.Linear(d, 1))
             self.part = GlobalPartition(K)
             self.part_out = nn.Sequential(nn.LayerNorm(self.part.out_dim), nn.Linear(self.part.out_dim, d, bias=False))
             nn.init.zeros_(self.part_out[1].weight)
-        # 第 70 步快筛的候选零件（global_gpf 的零件在 InputFusion 里，这里和 global 一样）
+        # Optional summary extensions; global_gpf is implemented in InputFusion.
         self.extra = None
         if self.mode == "global_msk":
             self.extra = MultiScaleSelect(d)

@@ -1,4 +1,4 @@
-"""Extract the original ProtT5/ProstT5 features using 1000/750 overlap-add chunks."""
+"""Extract ProtT5/ProstT5 features using 1000/750 overlap-add chunks."""
 import argparse,gc,json,os,sys
 from pathlib import Path
 import numpy as np

@@ -1,18 +1,16 @@
 {
-  "raw_dir": "data/MoRFs_AdapTrans/data/raw_seq2",
+  "raw_dir": "",
   "data_files": {
+    "TRAIN": "data/training/TRAIN421.txt",
     "MC2EXT": [
-      "outputs_abl65/data/MC2EXT/CV1.af",
-      "outputs_abl65/data/MC2EXT/CV2.af",
-      "outputs_abl65/data/MC2EXT/CV3.af",
-      "outputs_abl65/data/MC2EXT/CV4.af"
-    ],
-    "TRAIN": "data/MoRFs_AdapTrans/data/raw_seqs1/MoRFs_train_dataset1.txt",
-    "TEST464": "data/MoRFs_AdapTrans/data/raw_seqs1/MoRFs_test464.fasta",
-    "EXP53": "data/MoRFs_AdapTrans/data/raw_seqs1/EXP53.txt"
+      "data/training/MC2-ext/CV1.af",
+      "data/training/MC2-ext/CV2.af",
+      "data/training/MC2-ext/CV3.af",
+      "data/training/MC2-ext/CV4.af"
+    ]
   },
-  "feat_dir": "data/features_v2",
-  "out_dir": "outputs_abl91",
+  "feat_dir": "features",
+  "out_dir": "training_outputs/nested",
   "plms": [
     "prott5",
     "prostt5"
@@ -97,7 +95,7 @@
     45
   ],
   "blind_test": true,
-  "tag": "C91_S0r",
+  "tag": "nested_r",
   "finetune": "",
   "lora_r": 8,
   "lora_alpha": 16.0,

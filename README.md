@@ -79,6 +79,7 @@ in [Data](docs/DATA.md).
 | `scripts/` | Feature extraction, data preparation, training and example checks |
 | `examples/` | Three protein sequences, cached embeddings and expected scores |
 | `docs/` | Model, data, training and validation documentation |
+| `tests/` | Resource-import regression tests |
 
 To compare the example predictions with the stored reference scores:
 

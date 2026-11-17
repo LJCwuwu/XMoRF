@@ -1,16 +1,16 @@
-"""嵌套模型（第 71 步）：区域网络 r + 核心网络 q。核心是区域里的一部分：P(核心) = P(区域) × P(核心 | 区域) = r·q。
+"""嵌套模型：区域网络 r + 核心网络 q。核心是区域里的一部分：P(核心) = P(区域) × P(核心 | 区域) = r·q。
 
 两个网络都是 MoRFNet（各用一份配置）。r 直接用区域标注训练（MC2-ext 的整段结合区域）；
 q 只通过乘积 r·q 用经典的核心标注训练（TRAIN421）。一个模型给两路输出：区域 = r，核心 = r·q（核心永远不超过区域）。
 
-损失（一个 batch 里两部分各自按有效残基取平均，再相加；和第 63 步 joint.py 同一种加法）
+损失：一个 batch 内，两部分各自按有效残基取平均，再相加。
   MC2-ext 蛋白：r 上的加权 BCE；正样本权重 √(负/正)，按 MC2-ext 训练蛋白的训练标签数。
   经典蛋白：p = r·q 上的加权 BCE；正样本权重 √(负/正)，按经典训练蛋白数（全部非核心都算负）：
     核心残基                          −w·log(r·q)                      → r、q 都更新；
     离最近核心 > k 个残基的非核心       −log(1 − r·q)                    → r、q 都更新（当背景）；
     离最近核心 ≤ k 个残基的非核心       −log(1 − r·q)，r 不回传梯度        → 只更新 q
       （这些残基可能和核心在同一段结合区域里：它们只说明“不是核心”，不说明“不是区域”）。
-    k = 0：全部非核心都更新 r、q（对照：不截断梯度）。“离最近核心多远”和第 61 步 mask_flanks 同一个算法。
+    k = 0：全部非核心都更新 r、q（对照：不截断梯度）。距离计算与 mask_flanks 使用同一算法。
   数值上：log(r·q) = logσ(a) + logσ(b)；log(1 − r·q) = logsumexp(−a, −b, −a−b) − softplus(−a) − softplus(−b)
   （a、b 是两个网络的对数几率；两个式子对任何 a、b 都稳定）。
 早停：每轮在验证折上算 MC2-ext 蛋白上 r 的合并 AUC（评估标签）和经典蛋白上 r·q 的合并 AUC（原始标签），取平均。
@@ -78,7 +78,7 @@ def check_cfgs(cfg_r: Config, cfg_q: Config, shared=None) -> None:
 
 def mark_near(p: Protein, k: int) -> Protein:
     """经典训练蛋白：离最近核心残基不超过 k 个位置的非核心残基标成 NEAR（2），其余不变。
-    被第 61 步 mask_flanks(k) 屏蔽掉的残基，正好就是这里标成 2 的。k ≤ 0 或没有核心时原样返回。"""
+    被 mask_flanks(k) 屏蔽掉的残基，正好就是这里标成 2 的。k ≤ 0 或没有核心时原样返回。"""
     k = int(k)
     if k <= 0:
         return p
@@ -381,7 +381,7 @@ def train_nested(cfg_r: Config, cfg_q: Config, k_stop: int, data: Dict, run_dir:
 
 
 def load_nested(run_dir: str, plm_dims: Dict[str, int], device) -> Tuple[NestedNet, Config, Config]:
-    """读存下的嵌套模型（以后揭晓测试集时用）：返回 (模型（eval 模式）, r 的配置, q 的配置)。"""
+    """Load a nested checkpoint and return the evaluation model and both configurations."""
     cr = Config.load(os.path.join(run_dir, "config_r.json"))
     cq = Config.load(os.path.join(run_dir, "config_q.json"))
     model = NestedNet(cr, cq, plm_dims)

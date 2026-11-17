@@ -1,4 +1,4 @@
-"""Run one original final-model training job with the released fold assignment."""
+"""Train one XMoRF model for a specified role, fold and seed."""
 import argparse,json,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -49,7 +49,7 @@ def main():
  if not a.features:ap.error('--features is required for training')
  from morf.train.trainer import run_training
  from morf.train.nested import train_nested
- # Each fold/seed job has a new output tree. The original project is never written.
+ # Each fold/seed job uses a separate output directory.
  run=out/'runs'/f"{a.role}_f{a.fold}_s{a.seed}"
  if run.exists():raise FileExistsError(f'Choose a new output directory: {run}')
  out.mkdir(parents=True,exist_ok=True)
@@ -58,10 +58,10 @@ def main():
  else:foldfile.write_bytes(raw)
  if a.role=='nested':
   train_nested(cfgs[0],cfgs[1],0,{'cl':cl,'mc2':mc2},str(run),
-               {'cand':'S0','k_stop':0,'r_mode':'global','source':'paper final model'})
+               {'model':'nested','k_stop':0,'r_mode':'global'})
  else:
   c=cfgs[0];c.tag=a.role
-  # The original trainer appends _f{fold}_s{seed} to this tag.
+  # The trainer appends _f{fold}_s{seed} to this tag.
   run_training(c)
 
 

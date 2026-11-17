@@ -30,11 +30,13 @@ The predictor reads `weights/manifest.json`. Model paths are relative to
 `weights/`; the manifest specifies each checkpoint's SHA256 checksum, role,
 fold, seed and smoothing window, along with the development-set thresholds.
 
-For an existing experiment directory, assemble the bundle with:
+To assemble a bundle from checkpoint files stored in a local directory, run:
 
 ```bash
-python scripts/prepare_weights.py --source-project /path/to/MoRF_project --output weights
+python scripts/prepare_weights.py --source /path/to/checkpoints --output weights
 ```
 
-This command selects the checkpoints listed in `configs/ensemble.json`, verifies
-their checksums and writes the manifest. It does not retrain the models.
+The command searches recursively for `.pt` and `.pth` files and matches them to
+the SHA256 checksums in `configs/ensemble.json`. It copies the matching files
+into the bundle layout and writes the manifest. Filenames and source folder
+names may differ. Missing files or conflicting output files stop the import.

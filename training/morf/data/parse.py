@@ -1,18 +1,11 @@
-"""读取原始 MoRF 基准集。
+"""Parse MoRF benchmark sequences, residue labels and optional masks.
 
-支持的格式（自动识别）：
-  三行格式（最常见）：
-      >P12345
-      MSEQ...
-      000111...
-  也支持序列/标签折行（只要标签行全是标签字符且总长与序列一致）。
-
-标签映射：'1' → 1（MoRF），'0' → 0（非 MoRF），其他字符 → -1（忽略，不参与训练和评估）。
-特例：EXP53（MoRFchibi 整理）用 '1' 标短 MoRF（≤30 残基）、'2' 标长 MoRF（>30 残基），
-      两者都是 MoRF，所以 '2' → 1。（已核对：'1' 片段长 9~30，'2' 片段长 31~151，合计 2432 个
-      MoRF 残基，与文献一致。）短/长子集由 protocols.py 按片段长度重新划分，结果与 1/2 完全一致。
-如果你的文件用别的字符（比如 'M'/'N'），改 LABEL_MAP 即可；00_inspect_data.py 会先把字符统计打印出来。
-"""
+The parser accepts FASTA-like records with an identifier, sequence and label
+string. Sequence and label lines may wrap, but their total lengths must match.
+Labels 1 and 2 denote positive residues, 0 denotes negative residues, and other
+label characters are masked. EXP53 distinguishes short and long segments with
+labels 1 and 2; both are mapped to the positive class. protocols.py defines
+length-based evaluation subsets. Update LABEL_MAP for additional label symbols."""
 from __future__ import annotations
 
 import glob
@@ -97,7 +90,7 @@ def read_benchmark(path: str, label_map: Optional[Dict[str, int]] = None,
         if len(lab) != len(seq):
             raise ValueError(
                 f"{path}: 蛋白 {pid} 序列长 {len(seq)}，标签长 {len(lab)}，对不上。"
-                f" 请用 scripts/00_inspect_data.py 看一下文件格式。")
+                f" 每条序列必须有等长的逐残基标签。")
         arr = np.full(len(seq), -1, dtype=np.int8)
         for i, c in enumerate(lab):
             if c in label_map:

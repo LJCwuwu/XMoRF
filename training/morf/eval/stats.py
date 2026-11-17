@@ -87,7 +87,7 @@ def paired_bootstrap(y: np.ndarray, p1: np.ndarray, p2: np.ndarray, lengths: Seq
 
 def delong_test(y: np.ndarray, p1: np.ndarray, p2: np.ndarray) -> Dict[str, float]:
     """DeLong 配对 AUC 检验（Sun & Xu 2014 快速算法）。
-    注意：它假设残基独立，会偏乐观；论文里建议和 paired_bootstrap 一起报。"""
+    Assumes independent residues. Use protein-level paired_bootstrap for clustered observations."""
     m = y >= 0
     y, p1, p2 = y[m], p1[m], p2[m]
     pos, neg = y == 1, y == 0

@@ -1,40 +1,12 @@
-"""半马尔可夫条件随机场（semi-Markov CRF）——把"逐残基打分 + 滑动平均"换成"直接对片段建模"。
+"""Optional semi-Markov CRF decoder for segment-level prediction.
 
-【一句话】模型不再独立地问"这个残基是不是 MoRF"，而是问"[i, j) 这一整段是不是一个 MoRF"；
-         片段长度和起止边界都是学出来的，推断用精确动态规划。
-
-【为什么要做】MoRF 本来就是连续片段，不是独立残基。但现有所有预测器
-    （MoRFpred → MoRFchibi 2.0 → MoRFs_TransFuse → AdapTrans → 本文 A4）
-    都是"逐残基打分 + 事后滑动平均"。滑动平均是个拍脑袋的超参，而且完全没有长度先验。
-    我们自己的实验也指向这里：平滑窗口值 0.011 AUC（比大部分结构改动都大），
-    长 MoRF 全赢而短 MoRF 全平，AUPR 比 AUC 对方法差异敏感得多——这三件事都和"片段"有关。
-
-【模型】一个分段 y = 一串首尾相接、互不重叠的片段，每段标 0 或 1：
-      标 0（非 MoRF）的片段长度固定为 1，分数固定为 0（只有分差有意义）；
-      标 1（MoRF）的片段长度 ℓ ∈ [1, max_span]，分数
-          φ(i, j) = Σ_{l=i}^{j-1} e(l)      逐残基发射分（沿用原来的预测头输出）
-                  + b_s(i) + b_e(j-1)       起点 / 终点边界分
-                  + ψ(ℓ)                    可学习的长度先验
-      再加两个标量转移 T01（非 MoRF → MoRF）、T11（MoRF 紧接 MoRF）。
-      P(y | x) = exp(score(y)) / Z
-
-【训练】负对数似然 = logZ − logZ_gold。
-    logZ_gold 用同一套递推、但只允许和金标准一致的分段来算，所以：
-      · 金标准里任意长的 MoRF（超过 max_span）会被自动拆成几段相邻片段，不会出现"无法到达"的无穷损失；
-      · 标签为 -1（未标注）的位置既可以当 0 也可以当 1，等于对未知部分做边缘化——
-        这正是 MoRF 标注稀疏、且我们在跨基准子集上做了局部掩蔽时需要的语义。
-
-【推断】
-    · 边际概率 P(残基 l 落在某个 MoRF 片段里) = ∂logZ / ∂e(l)。
-      因为片段互不重叠，"覆盖 l 的片段个数"只能是 0 或 1，期望值就等于概率，所以用 autograd
-      求一次梯度就拿到全部边际，不必再写一遍 backward 递推（少一处可能写错的地方）。
-      这个边际天生是平滑的、带长度先验的，直接取代滑动平均。
-    · Viterbi 给出最可能的那个分段，于是模型第一次能直接输出"片段列表"，可以算片段级指标。
-
-【复杂度】O(L × max_span)。片段内求和用一个长度为 max_span 的滚动缓冲增量维护
-    （不用前缀和相减——长序列上前缀和会很大，相减会损失精度）。
-    DP 沿序列串行，但每步只有几个小算子，L=1024、max_span=48 时一次前向约几十毫秒。
-"""
+A positive segment score combines residue emissions, start/end boundary scores
+and a learned length prior. Negative segments have length one and score zero.
+Dynamic programming computes the partition function and Viterbi segmentation;
+residue marginals are obtained from derivatives of the log partition function.
+Masked labels are marginalized. Positive intervals longer than max_span can be
+represented by adjacent positive segments. Complexity is O(length * max_span).
+The final XMoRF configurations use the sigmoid decoder."""
 from __future__ import annotations
 
 from typing import Dict, List, Optional, Tuple

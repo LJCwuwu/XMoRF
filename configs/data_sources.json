@@ -1,109 +1,91 @@
 {
   "files": [
     {
-      "source": "data/MoRFs_AdapTrans/data/raw_seqs1/MoRFs_train_dataset1.txt",
       "path": "training/TRAIN421.txt",
       "sha256": "9a5b10f9e25778e7fe105fcd84ec39fc984f8bd3343f209766155d768ce1d6f6",
       "bytes": 507676
     },
     {
-      "source": "outputs_abl65/data/MC2EXT/CV1.af",
       "path": "training/MC2-ext/CV1.af",
       "sha256": "a46810fda4bc3893095d04e9dc8c9604a44d588f71a5e633495a7320c461ee60",
       "bytes": 146466
     },
     {
-      "source": "outputs_abl65/data/MC2EXT/CV2.af",
       "path": "training/MC2-ext/CV2.af",
       "sha256": "3ffea22dfd268d0fc53d02687d63b7b707c6c712e4c0d24eb308e472fa555383",
       "bytes": 207427
     },
     {
-      "source": "outputs_abl65/data/MC2EXT/CV3.af",
       "path": "training/MC2-ext/CV3.af",
       "sha256": "468d4a82ab5d4f85c1cd8b8f68b83843496288978f656f135ceeeab5b1d5d9e9",
       "bytes": 170481
     },
     {
-      "source": "outputs_abl65/data/MC2EXT/CV4.af",
       "path": "training/MC2-ext/CV4.af",
       "sha256": "13f2601b59a6aeb3402b4a1ac1507b8e5e3f2486de96c847cf99351e6db86a4d",
       "bytes": 202190
     },
     {
-      "source": "data/MoRFs_AdapTrans/data/raw_seqs1/MoRFs_test464.fasta",
       "path": "benchmarks/TEST464.txt",
       "sha256": "32fa709507cd5889373a52c45729bf812f6fae8ba7d87dce93236f14f71b9ecc",
       "bytes": 608841
     },
     {
-      "source": "data/MoRFs_AdapTrans/data/raw_seqs1/EXP53.txt",
       "path": "benchmarks/EXP53.txt",
       "sha256": "470841df6f43ae9d3ee7f52fa4e04035ac8bf695017c353affa4b457464ce681",
       "bytes": 52078
     },
     {
-      "source": "data/MoRFs_AdapTrans/data/raw_seq2/Test-143.af",
       "path": "benchmarks/Test-143.af",
       "sha256": "8cbb785ac01c23945cde4bc3b8a987a26babd61f1b22439352b8e81a97e26fd5",
       "bytes": 150626
     },
     {
-      "source": "data/MoRFs_AdapTrans/data/raw_seq2/Test-143_unmasked.af",
       "path": "benchmarks/Test-143_unmasked.af",
       "sha256": "64c724ebe2655ce6b14e2fd7c2b226dc3d68ea7282403f0142eb3ec2658f8069",
       "bytes": 150626
     },
     {
-      "source": "data/MoRFs_AdapTrans/data/raw_seq2/Test-128_AF2.af",
       "path": "benchmarks/Test-128_AF2.af",
       "sha256": "9051cade0ed542365587d9b0e8e614c825c5ddcfae6cd7cd43b495b43b37cc10",
       "bytes": 116623
     },
     {
-      "source": "data/MoRFs_AdapTrans/data/raw_seq2/Test-106_success.af",
       "path": "benchmarks/Test-106_success.af",
       "sha256": "c1bc6a6d7b2ba342c48ab4bffda0e6a6aa42cce1eb0b131025717a1067a3b163",
       "bytes": 114477
     },
     {
-      "source": "data/crossbench2/MC2_T106C.af",
       "path": "filtered/MC2_T106C.af",
       "sha256": "98d1a43c73ee4a10ea28eb6a3ddda7dbb993d6657dd0f1b7c8637a293d77caff",
       "bytes": 86525
     },
     {
-      "source": "data/crossbench2/EXP53C.af",
       "path": "filtered/EXP53C.af",
       "sha256": "4ace8e255889c14094346809cf2779d1b9e937095b03b34a90bb49d66baa73a3",
       "bytes": 13650
     },
     {
-      "source": "data/crossbench2/MC2_T143UC.af",
       "path": "filtered/MC2_T143UC.af",
       "sha256": "fc5b97866afc3b0f4f7bf58528c2841712cd3663ddc01286e48c8b57938a5976",
       "bytes": 116842
     },
     {
-      "source": "data/crossbench2/MC2_T143C.af",
       "path": "filtered/MC2_T143C.af",
       "sha256": "f50bd2cfc27d75c75afc93e5acf01e447a727edd356f7fd549159e4b1a9e3844",
       "bytes": 116842
     },
     {
-      "source": "data/crossbench2/MC2_T128C.af",
       "path": "filtered/MC2_T128C.af",
       "sha256": "c692af098a2ffdc1cfe36987c30f89e937ef2ab0bce99873d5d3d0ccb8cef2ca",
       "bytes": 88502
     },
     {
-      "source": "data/crossbench2/TEST464C.af",
       "path": "filtered/TEST464C.af",
       "sha256": "ce85d139a4d00fbf255cf44e5bfcf4aab868f7a8912a1dde1f86626be6da055f",
       "bytes": 221490
     },
     {
-      "source": "data/ideal/IDEALnew_pool.af",
       "path": "benchmarks/IDEAL_source_pool.af",
       "sha256": "d57a40fdb8510ccb3e22ede8c6608cde593d8d2b71ddf3a282d79ba67f355460",
       "bytes": 41336
