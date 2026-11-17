@@ -1,0 +1,117 @@
+[
+  {
+    "source": "MoRF_v2/morf/__init__.py",
+    "release": "training_reference/morf/__init__.py",
+    "sha256": "75ae9beea7f71c0fdac4fea9461224187d73465eae1e34886483e1ee4191dd93"
+  },
+  {
+    "source": "MoRF_v2/morf/config.py",
+    "release": "training_reference/morf/config.py",
+    "sha256": "e55eb31d8159899c3277270eb48e0c2dffdf0ef48127f20c405b8fec8d88a73e"
+  },
+  {
+    "source": "MoRF_v2/morf/data/__init__.py",
+    "release": "training_reference/morf/data/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "MoRF_v2/morf/data/parse.py",
+    "release": "training_reference/morf/data/parse.py",
+    "sha256": "3ff4989f530e8375a18036ced0fa9a056824d084c6a92dd2e5f2531796d1ed12"
+  },
+  {
+    "source": "MoRF_v2/morf/data/dataset.py",
+    "release": "training_reference/morf/data/dataset.py",
+    "sha256": "5abc9dc89a4732f35c4a03c712d0d15a7db4ad161516cbe1eb9a62d2f52ebc30"
+  },
+  {
+    "source": "MoRF_v2/morf/data/splits.py",
+    "release": "training_reference/morf/data/splits.py",
+    "sha256": "6214cd0227db32c2c5f9a4a3dbf0e2fb9381e01efedd6a40142eba8c39f28f48"
+  },
+  {
+    "source": "MoRF_v2/morf/features/__init__.py",
+    "release": "training_reference/morf/features/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "MoRF_v2/morf/features/scales.py",
+    "release": "training_reference/morf/features/scales.py",
+    "sha256": "99dbcd002573dcaf83b403cc12b8fa6157baead3ff89ea534c6094f9092095e9"
+  },
+  {
+    "source": "MoRF_v2/morf/features/plm.py",
+    "release": "training_reference/morf/features/plm.py",
+    "sha256": "97f05864abdae346a41ee0156a8085b6ef6e770ca783f8f2dc9d915759059a00"
+  },
+  {
+    "source": "MoRF_v2/morf/features/store.py",
+    "release": "training_reference/morf/features/store.py",
+    "sha256": "0510dbdc494807cf8883d585116088640e0c148a3f6ccf153377065208a3ad76"
+  },
+  {
+    "source": "MoRF_v2/morf/models/__init__.py",
+    "release": "training_reference/morf/models/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "MoRF_v2/morf/models/net.py",
+    "release": "training_reference/morf/models/net.py",
+    "sha256": "f66d08fadaaafc51a2c1e06e1d2e41e02d63f3f06cdb802d3620cffd7c05299d"
+  },
+  {
+    "source": "MoRF_v2/morf/models/spectral.py",
+    "release": "training_reference/morf/models/spectral.py",
+    "sha256": "089fc94b0cdd3e8b8b02c1495d8e1e323c1238b9c29884020e254fc17ed4c180"
+  },
+  {
+    "source": "MoRF_v2/morf/models/extras.py",
+    "release": "training_reference/morf/models/extras.py",
+    "sha256": "aab7b2a4dd7ff370cd3f8e69938aae4e00ffbbb1b4ea8f7239191a3eceb6d3e8"
+  },
+  {
+    "source": "MoRF_v2/morf/models/semicrf.py",
+    "release": "training_reference/morf/models/semicrf.py",
+    "sha256": "c34981805ee5c1dcc4122ba8d438282cc43be530c16d0c3f528f2349c36414d7"
+  },
+  {
+    "source": "MoRF_v2/morf/eval/__init__.py",
+    "release": "training_reference/morf/eval/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "MoRF_v2/morf/eval/metrics.py",
+    "release": "training_reference/morf/eval/metrics.py",
+    "sha256": "84cb4e09ab2d6a7386a282e0e726690e819aebd4f46bc427220165ee928a720f"
+  },
+  {
+    "source": "MoRF_v2/morf/eval/protocols.py",
+    "release": "training_reference/morf/eval/protocols.py",
+    "sha256": "24c821343baa3b1e5bda5d82065142921596048b5fb19d8f4ceb923a333ff982"
+  },
+  {
+    "source": "MoRF_v2/morf/eval/stats.py",
+    "release": "training_reference/morf/eval/stats.py",
+    "sha256": "fb839a47bcdf962e16be1488d00539cec4f06b95b4e802ee69c339dfe296f1f5"
+  },
+  {
+    "source": "MoRF_v2/morf/train/__init__.py",
+    "release": "training_reference/morf/train/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "MoRF_v2/morf/train/trainer.py",
+    "release": "training_reference/morf/train/trainer.py",
+    "sha256": "50ebc4f84b53d27d00b809bdd5caac60183c54370978d07fa608839feb0f3a77"
+  },
+  {
+    "source": "MoRF_v2/morf/train/nested.py",
+    "release": "training_reference/morf/train/nested.py",
+    "sha256": "04107952b7efa23dd8b3f77ca535d88a601023f40e48087931e0b8c04acd724b"
+  },
+  {
+    "source": "MoRF_v2/morf/train/losses.py",
+    "release": "training_reference/morf/train/losses.py",
+    "sha256": "92007c2178e51ae4fb1e6af9d7a4adf42756278edab1c75c3177ba14eeab7aa3"
+  }
+]

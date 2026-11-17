@@ -1,0 +1,15 @@
+{
+  "editable_install": true,
+  "cli_residue_rows": 1549,
+  "cli_max_absolute_errors": {
+    "core": 5.296765276274762e-06,
+    "region": 2.0323533676536165e-06,
+    "any_length": 2.836209455181482e-06
+  },
+  "training_check_only": [
+    "nested/f0/s0",
+    "core/f3/s5",
+    "region/f3/s5"
+  ],
+  "original_project_modified": false
+}

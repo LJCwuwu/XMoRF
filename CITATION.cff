@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "Please cite the XMoRF software and its associated manuscript when using this code."
+type: software
+title: "XMoRF"
+version: "1.0.0rc1"
+repository-code: "https://github.com/LJCwuwu/XMoRF"
+authors:
+  - family-names: Li
+    given-names: Jichuan
+  - family-names: Zhang
+    given-names: Jun
+abstract: "Nested prediction of molecular recognition feature cores and regions, with an any-length output."

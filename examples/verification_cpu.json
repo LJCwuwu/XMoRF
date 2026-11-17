@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "torch": "2.5.1+cpu",
+  "device": "cpu",
+  "models": 72,
+  "proteins": 3,
+  "residues": 1549,
+  "tolerance": 1e-05,
+  "rows": [
+    {
+      "protein_id": "P21513|2FYM_B|3H1C_D|3H8A_E|m832-849|m1038-1058",
+      "length": 1061,
+      "max_absolute_error": {
+        "core": 5.296792965570063e-06,
+        "region": 2.0323561276125446e-06,
+        "any_length": 2.836160298003154e-06,
+        "rq": 3.4314180679118067e-06,
+        "r": 2.1762021353843863e-06,
+        "q_prime": 8.946829468725603e-06,
+        "r_prime": 3.2961058120117848e-06
+      }
+    },
+    {
+      "protein_id": "sp|Q9Y3M2|DP|m15-28",
+      "length": 126,
+      "max_absolute_error": {
+        "core": 2.2869017988758067e-06,
+        "region": 1.4603483069475232e-06,
+        "any_length": 2.006282989186481e-06,
+        "rq": 4.196879747286886e-06,
+        "r": 2.0922504694320665e-06,
+        "q_prime": 4.797544018608768e-06,
+        "r_prime": 3.5762786865234375e-06
+      }
+    },
+    {
+      "protein_id": "DP01640",
+      "length": 362,
+      "max_absolute_error": {
+        "core": 3.7331284446495694e-06,
+        "region": 1.5601811239052132e-06,
+        "any_length": 1.6817957975423514e-06,
+        "rq": 4.370384385554704e-06,
+        "r": 1.961431936370328e-06,
+        "q_prime": 5.739259866355262e-06,
+        "r_prime": 2.383878147771412e-06
+      }
+    }
+  ],
+  "numerics": "A separate test establishes bitwise equivalence to the original forward pass on the same CPU. This tolerance compares CPU inference with the original saved GPU predictions.",
+  "scope": "Inference from supplied cached float16 embeddings. New PLM extraction and full retraining are not covered."
+}

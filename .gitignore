@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+/weights/
+/data/
+/features/
+/training_outputs/
+predictions*.tsv
+verification.json
+verification_server.json
+*.tar.gz
+*.zip
+.DS_Store

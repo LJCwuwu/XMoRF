@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "torch": "2.5.1+cpu",
+  "device": "cpu",
+  "rows": [
+    {
+      "protein_id": "P21513|2FYM_B|3H1C_D|3H8A_E|m832-849|m1038-1058",
+      "length": 1061,
+      "max_logit_difference_from_original_code": 0.0,
+      "predictor_networks_checked": 96
+    },
+    {
+      "protein_id": "sp|Q9Y3M2|DP|m15-28",
+      "length": 126,
+      "max_logit_difference_from_original_code": 0.0,
+      "predictor_networks_checked": 96
+    },
+    {
+      "protein_id": "DP01640",
+      "length": 362,
+      "max_logit_difference_from_original_code": 0.0,
+      "predictor_networks_checked": 96
+    }
+  ],
+  "scope": "Bitwise equivalence of refactored predictor forward pass and original model class definitions, all 96 network instances in 72 checkpoint files."
+}
