@@ -23,10 +23,21 @@ python -m pip install -e '.[features]'
 
 ## Model weights
 
-Prediction requires the separate model bundle containing 72 checkpoints and
-`manifest.json`. Extract the bundle into `weights/`, so that the manifest is at
-`weights/manifest.json`. The checkpoints are not stored in this repository;
-a public download link is not yet available.
+The [weights-v1 release](https://github.com/LJCwuwu/XMoRF/releases/tag/weights-v1) contains
+all 72 pretrained checkpoints and the inference manifest. From the root of an
+installed XMoRF checkout, run these commands to download the weights, unpack
+them and verify predictions for the three example proteins.
+
+```bash
+curl -fL -o xmorf-weights-v1.tar.gz \
+  https://github.com/LJCwuwu/XMoRF/releases/download/weights-v1/xmorf-weights-v1.tar.gz
+tar -xzf xmorf-weights-v1.tar.gz
+python scripts/verify_examples.py --weights weights
+```
+
+The archive extracts to `weights/`, with its manifest at `weights/manifest.json`.
+The SHA-256 of [xmorf-weights-v1.tar.gz](https://github.com/LJCwuwu/XMoRF/releases/download/weights-v1/xmorf-weights-v1.tar.gz)
+is `13c2659f0fd465c82e0acf997b36107736a87362a512a1fe45eafffbe0053f55`.
 
 The bundle layout and preparation command are described in
 [Model details](docs/MODEL.md).
@@ -81,12 +92,6 @@ in [Data](docs/DATA.md).
 | `docs/` | Model, data, training and validation documentation |
 | `tests/` | Resource-import regression tests |
 
-To compare the example predictions with the stored reference scores:
-
-```bash
-python scripts/verify_examples.py --weights weights
-```
-
-Recorded results and the scope of this check are in
+Recorded results and the scope of the example prediction check are in
 [Validation](docs/VALIDATION.md). Citation metadata are provided in
 [CITATION.cff](CITATION.cff).
